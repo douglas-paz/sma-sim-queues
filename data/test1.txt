@@ -1,0 +1,64 @@
+Test 1
+Queue=G/G/1/5
+Arrivals=2-4
+Departure=3-5
+
+Run 1:
+ Randoms=100_000
+ Seed=1640995200000
+ End of Simulation:
+ Scheduler=SmaScheduler{queue=[Event: DEPARTURE at 171365.609375, Event: ARRIVAL at 171368.000000]}
+ Queue= Size=5
+ Loss=14358
+ States	         0	         1	         2	         3	         4	         5
+ Times	       3.0	  2.031805	  3.511806	 194.19556	 67998.414	 103163.13
+ Prob.	      0.00%	      0.00%	      0.00%	      0.11%	     39.68%	     60.20%
+ Time=171364.281250
+
+Run 2:
+ Randoms=100_000
+ Seed=1577836800000
+ End of Simulation:
+ Scheduler=SmaScheduler{queue=[Event: ARRIVAL at 171409.812500, Event: DEPARTURE at 171411.031250]}
+ Queue= Size=4
+ Loss=14265
+ States	         0	         1	         2	         3	         4	         5
+ Times	 3.9549894	  8.379432	 10.392273	 256.18005	  68539.64	102588.266
+ Prob.	      0.00%	      0.00%	      0.01%	      0.15%	     39.99%	     59.85%
+ Time=171406.812500
+
+Run 3:
+ Randoms=100_000
+ Seed=1546300800000
+ End of Simulation:
+ Scheduler=SmaScheduler{queue=[Event: DEPARTURE at 171386.562500, Event: ARRIVAL at 171385.796875]}
+ Queue= Size=5
+ Loss=14310
+ States	         0	         1	         2	         3	         4	         5
+ Times	       3.0	  4.916839	  7.755158	  209.8904	 68213.484	 102942.91
+ Prob.	      0.00%	      0.00%	      0.00%	      0.12%	     39.80%	     60.07%
+ Time=171381.953125
+
+Run 4:
+ Randoms=100_000
+ Seed=1514764800000
+ End of Simulation:
+ Scheduler=SmaScheduler{queue=[Event: DEPARTURE at 171474.984375, Event: ARRIVAL at 171474.156250]}
+ Queue= Size=5
+ Loss=14292
+ States	         0	         1	         2	         3	         4	         5
+ Times	       3.0	 6.6519375	 7.1479053	  225.4144	 68212.984	  103016.5
+ Prob.	      0.00%	      0.00%	      0.00%	      0.13%	     39.78%	     60.08%
+ Time=171471.703125
+
+Run 5:
+ Randoms=100_000
+ Seed=1483228800000
+ End of Simulation:
+ Scheduler=SmaScheduler{queue=[Event: DEPARTURE at 171390.578125, Event: ARRIVAL at 171390.296875]}
+ Queue= Size=5
+ Loss=14286
+ States	         0	         1	         2	         3	         4	         5
+ Times	       3.0	  6.117557	 10.908865	 230.94548	  68148.49	 102987.75
+ Prob.	      0.00%	      0.00%	      0.01%	      0.13%	     39.76%	     60.09%
+ Time=171387.218750

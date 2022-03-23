@@ -13,37 +13,21 @@ public class SmaSimulation {
     private float time;
 
 
-    public SmaSimulation(Queue queue, int randoms, float first) {
-        this.queue = queue;
-        this.iterations = randoms;
-        this.first = first;
+    public SmaSimulation(Queue q, IRandom r, int i, float t1) {
+        this.queue = q;
+        this.iterations = i;
+        this.first = t1;
         this.time = 0;
 
-        this.random = new LinearCongruentRandom(0);
-        warmupRandom();
+        this.random = r;
 
         this.scheduler = new SmaScheduler();
-        this.scheduler.init(new Event(Event.ARRIVAL, first));
+        this.scheduler.init(new Event(Event.ARRIVAL, t1));
     }
 
-    public SmaSimulation(Queue q1, float[] list, float first) {
-        this.queue = q1;
-        this.iterations = list.length;
-        this.first = first;
-        this.time = 0;
-
-        this.random = new MockedRandom(list);
-
-        this.scheduler = new SmaScheduler();
-        this.scheduler.init(new Event(Event.ARRIVAL, first));
+    public SmaSimulation(Queue q, float[] list, float t1) {
+        this(q, new MockedRandom(list), list.length, t1);
     }
-
-    private void warmupRandom() {
-        for (int i = 0; i < 10; i++) {
-            random.nextInt();
-        }
-    }
-
 
     public void run() {
         while (iterations > 0) {
@@ -54,7 +38,7 @@ public class SmaSimulation {
             if (e.getType() == Event.DEPARTURE)
                 departure(e.getTime());
         }
-        System.out.println(String.format(Locale.ROOT, "End of Simulation: %n Scheduler=%s %n Queue=%s %n Time=%f", scheduler, queue.printStateTimes(time), time));
+        System.out.println(String.format(Locale.ROOT, " End of Simulation: %n Scheduler=%s %n Queue=%s %n Time=%f", scheduler, queue.printStateTimes(time), time));
     }
 
 

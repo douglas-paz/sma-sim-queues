@@ -29,4 +29,11 @@ public class LinearCongruentRandom implements IRandom {
         next();
         return (double) x / m;
     }
+
+
+    public static void warmupRandom(LinearCongruentRandom r) {
+        for (int i = 0; i < 10; i++) {
+            r.nextInt();
+        }
+    }
 }

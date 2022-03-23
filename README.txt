@@ -32,8 +32,10 @@ Conteúdo:
     para usar: java -jar simulador.jar
 
 - data/:
-    Coleta dos 1000 primeiros aleatórios gerados das execuções com semente = 0, 1, 2 e System.currentTimeMillis()
     FilaSimples1.yml: Arquivo de configuração da simulação.
+    random_list.dat: Lista de randoms para comparação
+    test1.txt: Saída da simulação da fila G/G/1/5 para 5 execuções com sementes arbitrárias
+    test2.txt: Saída da simulação da fila G/G/2/5 para 5 execuções com sementes arbitrárias
 
 
 - reports/:

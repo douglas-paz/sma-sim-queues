@@ -1,0 +1,64 @@
+Test 2
+Queue=G/G/2/5
+Arrivals=2-4
+Departure=3-5
+
+Run 1:
+ Randoms=100_000
+ Seed=1640995200000
+ End of Simulation:
+ Scheduler=SmaScheduler{queue=[Event: DEPARTURE at 149959.453125, Event: DEPARTURE at 149963.078125, Event: ARRIVAL at 149962.984375]}
+ Queue= Size=2
+ Loss=0
+ States	         0	         1	         2	         3	         4	         5
+ Times	 2067.8994	 95837.336	   51785.3	 268.73123	       0.0	       0.0
+ Prob.	      1.38%	     63.91%	     34.53%	      0.18%	      0.00%	      0.00%
+ Time=149959.265625
+
+Run 2:
+ Randoms=100_000
+ Seed=1577836800000
+ End of Simulation:
+ Scheduler=SmaScheduler{queue=[Event: DEPARTURE at 150164.734375, Event: DEPARTURE at 150168.000000, Event: ARRIVAL at 150166.531250]}
+ Queue= Size=2
+ Loss=0
+ States	         0	         1	         2	         3	         4	         5
+ Times	  2045.878	  96456.71	 51404.992	 255.73409	       0.0	       0.0
+ Prob.	      1.36%	     64.23%	     34.23%	      0.17%	      0.00%	      0.00%
+ Time=150163.312500
+
+Run 3:
+ Randoms=100_000
+ Seed=1546300800000
+ End of Simulation:
+ Scheduler=SmaScheduler{queue=[Event: DEPARTURE at 149845.812500, Event: DEPARTURE at 149849.765625, Event: ARRIVAL at 149848.984375]}
+ Queue= Size=2
+ Loss=0
+ States	         0	         1	         2	         3	         4	         5
+ Times	 2011.4272	  95596.38	 51961.387	 275.94714	       0.0	       0.0
+ Prob.	      1.34%	     63.80%	     34.68%	      0.18%	      0.00%	      0.00%
+ Time=149845.140625
+
+Run 4:
+ Randoms=100_000
+ Seed=1514764800000
+ End of Simulation:
+ Scheduler=SmaScheduler{queue=[Event: DEPARTURE at 149975.343750, Event: ARRIVAL at 149973.218750]}
+ Queue= Size=1
+ Loss=0
+ States	         0	         1	         2	         3	         4	         5
+ Times	 2032.2233	  95759.98	 51898.414	 280.15332	       0.0	       0.0
+ Prob.	      1.36%	     63.85%	     34.61%	      0.19%	      0.00%	      0.00%
+ Time=149970.765625
+
+Run 5:
+ Randoms=100_000
+ Seed=1483228800000
+ End of Simulation:
+ Scheduler=SmaScheduler{queue=[Event: DEPARTURE at 149917.984375, Event: DEPARTURE at 149921.343750, Event: ARRIVAL at 149919.890625]}
+ Queue= Size=2
+ Loss=0
+ States	         0	         1	         2	         3	         4	         5
+ Times	 2060.8965	  95714.54	  51856.67	 284.71265	       0.0	       0.0
+ Prob.	      1.37%	     63.85%	     34.59%	      0.19%	      0.00%	      0.00%
+ Time=149916.812500
