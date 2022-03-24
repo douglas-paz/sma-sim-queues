@@ -2,10 +2,6 @@ SMA Sim Queues - Simulador de filas
 
 - Versão 1
 Esta é a implementação inicial do algoritmo de simulação de filas simples.
-A implementação executa os seguintes cenários de testes:
-- Fila G/G/1/5 com chegadas entre 2 e 4 e saídas entre 3 e 5.
-- Fila G/G/2/5 com chegadas entre 2 e 4 e saídas entre 3 e 5.
-
 A fim de testar a corretude das simulações mais facilmente, o executável implementa
 uma simulação com os seguintes parâmetros:
 
@@ -21,10 +17,15 @@ Parâmetros:
 
 É possível obter os arquivos de configuração desta simulação na pasta /data.
 
+Os resultados obtidos podem ser encontrados na pasta /reports, e foram obtidos na execução dos seguintes cenários de testes:
+- Fila G/G/1/5 com chegadas entre 2 e 4 e saídas entre 3 e 5.
+- Fila G/G/2/5 com chegadas entre 2 e 4 e saídas entre 3 e 5.
+
 
 Conteúdo:
-- /sma-simulator-1.0.jar:
+- /sim-queues-1.0.jar:
     Executável desta implementação.
+    para usar: java -jar sim-queues-1.0.jar
 
 - tools/sma-random-1.0.jar:
     Gerador de números aleatórios.
@@ -43,9 +44,10 @@ Conteúdo:
 - data/:
     FilaSimples1.yml: Arquivo de configuração da simulação.
     random_list.dat: Lista de randoms para comparação
-    test1.txt: Saída da simulação da fila G/G/1/5 para 5 execuções com sementes arbitrárias
-    test2.txt: Saída da simulação da fila G/G/2/5 para 5 execuções com sementes arbitrárias
 
 
 - reports/:
+    test1.txt: Saída da simulação da fila G/G/1/5 para 5 execuções com sementes arbitrárias
+    test2.txt: Saída da simulação da fila G/G/2/5 para 5 execuções com sementes arbitrárias
     Plotagem dos gráficos de dispersão para cada uma das execuções (gnuplot);
+

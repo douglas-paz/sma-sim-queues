@@ -30,6 +30,7 @@ public class SmaSimulation {
     }
 
     public void run() {
+        System.out.println(String.format("Starting simulation: %n Queues=%s %n Iterations=%d %n", queue, iterations));
         while (iterations > 0) {
             Event e = scheduler.removeFirst();
 //            System.out.println(e);
