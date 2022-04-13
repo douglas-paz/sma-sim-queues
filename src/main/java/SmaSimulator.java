@@ -1,3 +1,5 @@
+import sma.IRandom;
+import sma.MockedRandom;
 import sma.Queue;
 import sma.SmaSimulation;
 
@@ -28,8 +30,8 @@ public class SmaSimulator {
                 0.2931f
         };
 
-
-        SmaSimulation sim = new SmaSimulation(q1, randomsList, first);
+        IRandom random = new MockedRandom(randomsList);
+        SmaSimulation sim = new SmaSimulation(q1, random, randomsList.length, first);
         sim.run();
     }
 

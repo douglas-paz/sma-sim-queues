@@ -25,10 +25,6 @@ public class SmaSimulation {
         this.scheduler.init(new Event(Event.ARRIVAL, t1));
     }
 
-    public SmaSimulation(Queue q, float[] list, float t1) {
-        this(q, new MockedRandom(list), list.length, t1);
-    }
-
     public void run() {
         System.out.println(String.format("Starting simulation: %n Queues=%s %n Iterations=%d %n", queue, iterations));
         while (iterations > 0) {
