@@ -5,6 +5,7 @@ import java.util.Locale;
 
 public class Queue {
 
+    private String name;
     private int servers;
     private int capacity;
     private float minArrival;
@@ -17,7 +18,8 @@ public class Queue {
     private int loss = 0;
 
 
-    public Queue(int servers, int capacity, float minArrival, float maxArrival, float minDeparture, float maxDeparture) {
+    public Queue(String name, int servers, int capacity, float minArrival, float maxArrival, float minDeparture, float maxDeparture) {
+        this.name = name;
         this.servers = servers;
         this.capacity = capacity;
         this.minArrival = minArrival;
@@ -26,7 +28,15 @@ public class Queue {
         this.maxDeparture = maxDeparture;
 
         this.size = 0;
-        this.states = new float[capacity+1];
+        this.states = new float[capacity + 1];
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getServers() {
@@ -93,10 +103,19 @@ public class Queue {
         this.size = size;
     }
 
+    public void addLoss() {
+        this.loss++;
+    }
+
+    public int getLoss() {
+        return this.loss;
+    }
+
     @Override
     public String toString() {
         return "Queue{" +
-                "servers=" + servers +
+                "name=" + name +
+                ", servers=" + servers +
                 ", size=" + capacity +
                 ", minArrival=" + minArrival +
                 ", maxArrival=" + maxArrival +
@@ -106,7 +125,6 @@ public class Queue {
                 '}';
     }
 
-
     public void updateTimes(float delta) {
         int i = size;
         states[i] = states[i] + delta;
@@ -114,28 +132,33 @@ public class Queue {
 
     public String printStateTimes(float time) {
         StringBuilder sb = new StringBuilder();
-        sb.append(" Size=").append(size);
-        sb.append("\n").append(" Loss=").append(loss);
-        sb.append('\n').append(' ').append("States\t");
+
+//        sb.append(" Size=").append(size);
+//        sb.append("\n").append(" Loss=").append(loss);
+//        sb.append('\n').append(' ').append("States\t");
+//        for (int i = 0; i <= capacity; i++) {
+//            sb.append(String.format("%10s", i)).append('\t');
+//        }
+//        sb.append('\n').append(' ').append("Times\t");
+//        for (int i = 0; i <= capacity; i++) {
+//            sb.append(String.format("%10s", states[i])).append('\t');
+//        }
+//        sb.append('\n').append(' ').append("Prob.\t");
+//        for (int i = 0; i <= capacity; i++) {
+//            sb.append(String.format("%10s%%", String.format(Locale.ROOT, "%.2f", 100 * states[i]/time))).append('\t');
+//        }
+
+        sb.append("Queue: ").append(name).append("\n")
+                .append("Size: ").append(size).append("\n")
+                .append("Loss: ").append(loss).append("\n\n")
+                .append("State     ").append("\t").append("Time      ").append("\t").append("Prob.     ").append("\n");
+
         for (int i = 0; i <= capacity; i++) {
-            sb.append(String.format("%10s", i)).append('\t');
+            sb.append(String.format("%-10s", i)).append('\t')
+                    .append(String.format("%10s", states[i])).append('\t')
+                    .append(String.format("%10s%%", String.format(Locale.ROOT, "%.2f", 100 * states[i] / time))).append('\n');
         }
-        sb.append('\n').append(' ').append("Times\t");
-        for (int i = 0; i <= capacity; i++) {
-            sb.append(String.format("%10s", states[i])).append('\t');
-        }
-        sb.append('\n').append(' ').append("Prob.\t");
-        for (int i = 0; i <= capacity; i++) {
-            sb.append(String.format("%10s%%", String.format(Locale.ROOT, "%.2f", 100 * states[i]/time))).append('\t');
-        }
+
         return sb.toString();
-    }
-
-    public void addLoss() {
-        this.loss++;
-    }
-
-    public int getLoss() {
-        return this.loss;
     }
 }

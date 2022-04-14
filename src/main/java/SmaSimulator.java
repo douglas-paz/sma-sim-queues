@@ -7,7 +7,7 @@ public class SmaSimulator {
 
 
     public static void main(String[] args) {
-        Queue q1 = new Queue(1, 5, 2f, 4f, 3f, 5f);
+        Queue q1 = new Queue("Q1", 1, 5, 2f, 4f, 3f, 5f);
         int randoms = 100_000;
         float first = 3f;
 
