@@ -1,7 +1,13 @@
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 import sma.IRandom;
+import sma.Input;
+import sma.Loader;
 import sma.MockedRandom;
 import sma.Queue;
 import sma.SmaSimulation;
+
+import java.io.InputStream;
 
 public class SmaSimulator {
 
@@ -10,6 +16,8 @@ public class SmaSimulator {
         Queue q1 = new Queue("Q1", 1, 5, 2f, 4f, 3f, 5f);
         int randoms = 100_000;
         float first = 3f;
+
+//        Input input = new Loader().inputLoader(args[0]);
 
         float[] randomsList = new float[] {
                 0.2176f,
