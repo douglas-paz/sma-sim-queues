@@ -11,7 +11,6 @@ public class SmaSimulation {
 
     private IRandom random;
     private int iterations;
-    private float first;
     private float time;
     private Map<String, Queue> queues = new HashMap<>();
     private MultiValuedMap<String, Route> network = new ArrayListValuedHashMap<>();
@@ -20,7 +19,6 @@ public class SmaSimulation {
     public SmaSimulation(Queue q, IRandom r, int i, float t1) {
         this.queues.put(q.getName(), q);
         this.iterations = i;
-        this.first = t1;
         this.time = 0;
 
         this.random = r;
@@ -29,17 +27,15 @@ public class SmaSimulation {
         this.scheduler.init(new Event(Event.ARRIVAL, t1, q.getName()));
     }
 
-    public SmaSimulation(Map<String, Queue> q, MultiValuedMap<String, Route> n, IRandom r, int i, Event e1) {
+    public SmaSimulation(Map<String, Queue> q, MultiValuedMap<String, Route> n, IRandom r, int i, List<Event> e1) {
         this.queues = q;
         this.network = n;
         this.iterations = i;
         this.time = 0;
-        this.first = e1.getTime();
 
         this.random = r;
 
-        this.scheduler = new SmaScheduler();
-        this.scheduler.init(e1);
+        this.scheduler = new SmaScheduler(e1);
     }
 
     public void run() {
@@ -77,17 +73,20 @@ public class SmaSimulation {
         if (q.getSize() < q.getCapacity()) {
             q.setSize(q.getSize() + 1);
             if (q.getSize() <= q.getServers()) {
-                if (network == null) {
-                    scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(q.getMinDeparture(), q.getMaxDeparture()), q.getName()));
-                } else {
+                if (network != null) {
                     List<Route> routes = (List<Route>) network.get(q.getName());
-                    Route rt;
-                    if (routes.size() == 1) {
-                        rt = routes.get(0);
+                    if (routes != null && routes.size() > 0) {
+                        Route rt = routes.size() == 1 ? routes.get(0) : selectRoute(routes, randomBetween(0, 1));
+                        if (rt instanceof ExitRoute) {
+                            scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(q.getMinDeparture(), q.getMaxDeparture()), q.getName()));
+                        } else {
+                            scheduler.add(new Event(Event.TRANSITION, t + randomBetween(q.getMinDeparture(), q.getMaxDeparture()), rt.getOrigin(), rt.getDestination()));
+                        }
                     } else {
-                        rt = selectRoute(routes, randomBetween(0, 1));
+                        scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(q.getMinDeparture(), q.getMaxDeparture()), q.getName()));
                     }
-                    scheduler.add(new Event(Event.TRANSITION, t + randomBetween(q.getMinDeparture(), q.getMaxDeparture()), rt.getOrigin(), rt.getDestination()));
+                } else {
+                    scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(q.getMinDeparture(), q.getMaxDeparture()), q.getName()));
                 }
             }
         } else {
@@ -96,11 +95,40 @@ public class SmaSimulation {
         scheduler.add(new Event(Event.ARRIVAL, t + randomBetween(q.getMinArrival(), q.getMaxArrival()), q.getName()));
     }
 
+    public void innerArrival(Queue q, float t) {
+        updateTime(t);
+        if (q.getSize() < q.getCapacity()) {
+            q.setSize(q.getSize() + 1);
+            if (q.getSize() <= q.getServers()) {
+                if (network != null) {
+                    List<Route> routes = (List<Route>) network.get(q.getName());
+                    if (routes != null && routes.size() > 0) {
+                        Route rt = routes.size() == 1 ? routes.get(0) : selectRoute(routes, randomBetween(0, 1));
+                        if (rt instanceof ExitRoute) {
+                            scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(q.getMinDeparture(), q.getMaxDeparture()), q.getName()));
+                        } else {
+                            scheduler.add(new Event(Event.TRANSITION, t + randomBetween(q.getMinDeparture(), q.getMaxDeparture()), rt.getOrigin(), rt.getDestination()));
+                        }
+                    } else {
+                        scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(q.getMinDeparture(), q.getMaxDeparture()), q.getName()));
+                    }
+                } else {
+                    scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(q.getMinDeparture(), q.getMaxDeparture()), q.getName()));
+                }
+            }
+        } else {
+            q.addLoss();
+        }
+    }
+
     public Route selectRoute(List<Route> routes, float rnd) {
-        return routes.stream()
-                .sorted((o1, o2) -> Float.compare(o1.getProbability(), o2.getProbability()))
-                .reduce((route, route2) -> rnd < route.getProbability() ? route : route2)
-                .orElse(new Route("", "", 0));
+        routes.sort((o1, o2) -> Float.compare(o1.getProbability(), o2.getProbability()));
+        float p = 0f;
+        for (Route r : routes) {
+            p += r.getProbability();
+            if (rnd < p) return r;
+        }
+        return routes.get(0);
     }
 
 
@@ -112,20 +140,40 @@ public class SmaSimulation {
         }
     }
 
+//    private void transition(Queue src, Queue dst, float t) {
+//        updateTime(t);
+//        src.setSize(src.getSize() - 1);
+//        if (src.getSize() >= src.getServers()) {
+////            scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(src.getMinDeparture(), src.getMaxDeparture()), src.getName()));
+//            scheduler.add(new Event(Event.TRANSITION, t + randomBetween(src.getMinDeparture(), src.getMaxDeparture()), src.getName(), dst.getName()));
+//        }
+//        if (dst.getSize() < dst.getCapacity()) {
+//            dst.setSize(dst.getSize() + 1);
+//            if (dst.getSize() <= dst.getServers()) {
+//                if (network != null) {
+//                    List<Route> routes = (List<Route>) network.get(dst.getName());
+//                    if (routes != null && routes.size() > 0) {
+//                        Route rt = routes.size() == 1 ? routes.get(0) : selectRoute(routes, randomBetween(0, 1));
+//                        if (rt instanceof ExitRoute) {
+//                            scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(dst.getMinDeparture(), dst.getMaxDeparture()), dst.getName()));
+//                        } else {
+//                            scheduler.add(new Event(Event.TRANSITION, t + randomBetween(dst.getMinDeparture(), dst.getMaxDeparture()), rt.getOrigin(), rt.getDestination()));
+//                        }
+//                    } else {
+//                        scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(dst.getMinDeparture(), dst.getMaxDeparture()), dst.getName()));
+//                    }
+//                } else {
+//                    scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(dst.getMinDeparture(), dst.getMaxDeparture()), dst.getName()));
+//                }
+//            }
+//        } else {
+//            dst.addLoss();
+//        }
+//    }
+
     private void transition(Queue src, Queue dst, float t) {
-        updateTime(t);
-        src.setSize(src.getSize() - 1);
-        if (src.getSize() >= src.getServers()) {
-            scheduler.add(new Event(Event.TRANSITION, t + randomBetween(src.getMinDeparture(), src.getMaxDeparture()), src.getName(), dst.getName()));
-        }
-        if (dst.getSize() < dst.getCapacity()) {
-            dst.setSize(dst.getSize() + 1);
-            if (dst.getSize() <= dst.getServers()) {
-                scheduler.add(new Event(Event.DEPARTURE, t + randomBetween(dst.getMinDeparture(), dst.getMaxDeparture()), dst.getName()));
-            }
-        } else {
-            dst.addLoss();
-        }
+        departure(src, t);
+        innerArrival(dst, t);
     }
 
 

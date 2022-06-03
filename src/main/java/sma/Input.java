@@ -5,28 +5,27 @@ import java.util.Map;
 
 public class Input {
 
-    public List<Double> rndnumbers;
+    public List<Float> rndnumbers;
     public List<Long> seeds;
+    public Long rndnumbersPerSeed;
     public Map<String, InputQueue> queues;
-    public Map<String, Double> arrivals;
+    public Map<String, Float> arrivals;
     public List<Network> network;
 
-    public Long rndnumbersPerSeed = 100000L;
 
     public static class InputQueue {
         public int capacity;
         public int servers;
-        public double minArrival;
-        public double maxArrival;
-        public double minService;
-        public double maxService;
+        public float minArrival;
+        public float maxArrival;
+        public float minService;
+        public float maxService;
     }
+
     public static class Network {
         public String source;
         public String target;
-        public double probability;
-
-        public Network() {
-        }
+        public float probability;
+        public Network() {}
     }
 }

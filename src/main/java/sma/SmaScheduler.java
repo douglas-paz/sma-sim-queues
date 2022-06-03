@@ -11,6 +11,10 @@ public class SmaScheduler {
         this.queue = new ArrayList<>();
     }
 
+    public SmaScheduler(List<Event> list) {
+        this.queue = list;
+    }
+
     public void init(Event e) {
         this.queue.add(e);
     }

@@ -3,6 +3,7 @@ package sma;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
@@ -14,6 +15,12 @@ public class Loader {
         InputStream inputStream = this.getClass()
                 .getClassLoader()
                 .getResourceAsStream(fileLocation);
+        return yaml.load(inputStream);
+    }
+
+    public Input loadFromFile(String file) throws FileNotFoundException {
+        Yaml yaml = new Yaml(new Constructor(Input.class));
+        InputStream inputStream = new FileInputStream(file);
         return yaml.load(inputStream);
     }
 }

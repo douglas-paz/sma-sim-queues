@@ -6,7 +6,6 @@ public class Route {
     private String destination;
     private float probability;
 
-
     public Route(String origin, String destination, float probability) {
         this.origin = origin;
         this.destination = destination;
@@ -39,5 +38,14 @@ public class Route {
 
     public void setProbability(float probability) {
         this.probability = probability;
+    }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "origin='" + origin + '\'' +
+                ", destination='" + destination + '\'' +
+                ", probability=" + probability +
+                '}';
     }
 }

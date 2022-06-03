@@ -22,11 +22,15 @@ test {
 }
 
 application {
-    mainClass = 'SmaRandom'
+    mainClass = 'SmaSimulator'
 }
 
 jar {
     manifest {
         attributes 'Main-Class': 'SmaSimulator'
+    }
+    from {
+//        configurations.implementation.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }

@@ -4,14 +4,15 @@ import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SmaSimulation2Test {
 
-
     @Test
-    public void testTandem() {
+    public void testTandem_RandomList() {
         System.out.println("Test Tandem " +
                 "\nQueue1=G/G/2/3 Arrivals=2-3 Departure=2-5 " +
                 "\nQueue2=G/G/1/3 Arrivals=TandemQ1 Departures=3-5");
@@ -44,10 +45,32 @@ public class SmaSimulation2Test {
         };
 
         IRandom random = new MockedRandom(randomsList);
-        int iterations = 100_000;
-        Event firstEvent = new Event(Event.ARRIVAL, 2.5f, "Q1");
+        List<Event> arrivals = new ArrayList<>();
+        arrivals.add(new Event(Event.ARRIVAL, 2.5f, "Q1"));
+        SmaSimulation sim = new SmaSimulation(queues, network, random, randomsList.length, arrivals);
+        sim.run();
+    }
 
-        SmaSimulation sim = new SmaSimulation(queues, network, random, randomsList.length, firstEvent);
+    @Test
+    public void testTandem_RandomAmount() {
+        System.out.println("Test Tandem " +
+                "\nQueue1=G/G/2/3 Arrivals=2-3 Departure=2-5 " +
+                "\nQueue2=G/G/1/3 Arrivals=TandemQ1 Departures=3-5");
+
+        Map<String, Queue> queues = new HashMap<>();
+        queues.put("Q1", new Queue("Q1", 2, 3, 2, 3, 2, 5));
+        queues.put("Q2", new Queue("Q2", 1, 3, 0, 0, 3, 5));
+
+        MultiValuedMap<String, Route> network = new ArrayListValuedHashMap<>();
+        network.put("Q1", new Route("Q1", "Q2", 1.0f));
+
+        IRandom random = new LinearCongruentRandom(10);
+        LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
+        int iterations = 100_000;
+
+        List<Event> arrivals = new ArrayList<>();
+        arrivals.add(new Event(Event.ARRIVAL, 2.5f, "Q1"));
+        SmaSimulation sim = new SmaSimulation(queues, network, random, iterations, arrivals);
         sim.run();
     }
 }
