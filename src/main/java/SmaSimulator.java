@@ -1,7 +1,7 @@
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
-import sma.*;
 import sma.Queue;
+import sma.*;
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;

@@ -142,7 +142,6 @@ public class SmaSimulation {
         innerArrival(e, dst);
     }
 
-
     private float randomBetween(float a, float b) {
         iterations = iterations - 1;
         float rnd = (float) ((b - a) * random.nextDouble() + a);
