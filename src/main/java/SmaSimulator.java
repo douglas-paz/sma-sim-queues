@@ -1,14 +1,12 @@
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import sma.*;
+import sma.Queue;
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SmaSimulator {
 
@@ -16,7 +14,6 @@ public class SmaSimulator {
     public static void main(String[] args) {
         try {
             Input input = new Loader().loadFromFile(args[0]);
-//            printInput(input);
 
             long seed = 0;
             int iterations = 0;
@@ -25,7 +22,9 @@ public class SmaSimulator {
             if (input.seeds != null) {
                 seed = input.seeds.get(0);
                 iterations = Math.toIntExact(input.rndnumbersPerSeed);
-                random = new BigDecimalRandom(seed);
+                random = args.length > 1 && Arrays.asList(args).contains("-big")
+                        ? new BigDecimalRandom(seed)
+                        : new LinearCongruentRandom(seed);
             } else if (input.rndnumbers != null) {
                 random = new MockedRandom(convertRandoms(input.rndnumbers));
                 iterations = input.rndnumbers.size();

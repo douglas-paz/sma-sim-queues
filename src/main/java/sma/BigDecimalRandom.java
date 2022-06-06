@@ -5,9 +5,9 @@ import java.math.BigInteger;
 
 public class BigDecimalRandom implements IRandom {
 
-    private BigInteger a = BigInteger.valueOf(25214903917L);
-    private BigInteger c = BigInteger.valueOf(11L);
-    private BigInteger M = BigInteger.valueOf(281474976710656L);
+    private BigInteger a = BigInteger.valueOf(2).pow(64);
+    private BigInteger c = BigInteger.valueOf(6364136223846793005L);
+    private BigInteger M = BigInteger.valueOf(1442695040888963407L);
     private BigInteger x;
 
     public BigDecimalRandom(Long semente) {

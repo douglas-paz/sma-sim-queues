@@ -1,6 +1,5 @@
 package sma;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -90,14 +89,6 @@ public class Queue {
     public void setMaxDeparture(float maxDeparture) {
         this.maxDeparture = maxDeparture;
     }
-
-//    public float[] getStates() {
-//        return states;
-//    }
-//
-//    public void setStates(float[] states) {
-//        this.states = states;
-//    }
 
     public int getSize() {
         return size;

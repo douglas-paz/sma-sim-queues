@@ -43,7 +43,6 @@ public class SmaSimulation {
             while (iterations > 0) {
                 Event e = scheduler.removeFirst();
                 updateTime(e.getTime());
-                System.out.println("Iterations: " + iterations + ", " + e);
                 if (e.getType() == Event.ARRIVAL)
                     arrival(e, queues.get(e.getQueue()));
                 else if (e.getType() == Event.DEPARTURE)
@@ -53,7 +52,6 @@ public class SmaSimulation {
                 }
             }
         } catch (Exception e) {
-            System.out.println("End of randoms");
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -66,7 +64,6 @@ public class SmaSimulation {
         float delta = t - time;
         time = t;
         queues.forEach((s, queue) -> queue.updateTimes(delta));
-//        System.out.println(String.format(Locale.ROOT, "Times: %n Time=%f %n Delta=%f %n Queue=%s", time, delta, queue.printStateTimes()));
     }
 
 
@@ -140,39 +137,6 @@ public class SmaSimulation {
         }
     }
 
-//    private void transition(Event e, Queue src, Queue dst) throws Exception {
-//        if (src.getSize() == 0)
-//            throw new Exception("Queue is empty");
-//        src.setSize(src.getSize() - 1);
-//        if (src.getSize() >= src.getServers()) {
-//            scheduler.add(new Event(Event.DEPARTURE, e.getTime() + randomBetween(dst.getMinDeparture(), dst.getMaxDeparture()), dst.getName()));
-//        }
-//        if (dst.getCapacity() == 0 || dst.getSize() < dst.getCapacity()) {
-//            dst.setSize(dst.getSize() + 1);
-//            if (dst.getSize() <= dst.getServers()) {
-//                if (network != null) {
-//                    List<Route> routes = (List<Route>) network.get(dst.getName());
-//                    if (routes != null && routes.size() > 0) {
-//                        Route rt = routes.size() == 1
-//                                ? routes.get(0)
-//                                : selectRoute(routes);
-//                        if (rt instanceof ExitRoute) {
-//                            scheduler.add(new Event(Event.DEPARTURE, e.getTime() + randomBetween(dst.getMinDeparture(), dst.getMaxDeparture()), dst.getName()));
-//                        } else {
-//                            scheduler.add(new Event(Event.TRANSITION, e.getTime() + randomBetween(dst.getMinDeparture(), dst.getMaxDeparture()), rt.getOrigin(), rt.getDestination()));
-//                        }
-//                    } else {
-//                        scheduler.add(new Event(Event.DEPARTURE, e.getTime() + randomBetween(dst.getMinDeparture(), dst.getMaxDeparture()), dst.getName()));
-//                    }
-//                } else {
-//                    scheduler.add(new Event(Event.DEPARTURE, e.getTime() + randomBetween(dst.getMinDeparture(), dst.getMaxDeparture()), dst.getName()));
-//                }
-//            }
-//        } else {
-//            dst.addLoss();
-//        }
-//    }
-
     private void transition(Event e, Queue src, Queue dst) throws Exception {
         departure(e, src);
         innerArrival(e, dst);
@@ -182,7 +146,6 @@ public class SmaSimulation {
     private float randomBetween(float a, float b) {
         iterations = iterations - 1;
         float rnd = (float) ((b - a) * random.nextDouble() + a);
-//        System.out.println(String.format(Locale.ROOT, "Randoms: Next=%f Remaining=%d", rnd, iterations));
         return rnd;
     }
 }
