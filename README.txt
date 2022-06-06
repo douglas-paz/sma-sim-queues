@@ -1,29 +1,15 @@
 SMA Sim Queues - Simulador de filas
 
-- Versão 1
-Esta é a implementação inicial do algoritmo de simulação de filas simples.
-A fim de testar a corretude das simulações mais facilmente, o executável implementa
-uma simulação com os seguintes parâmetros:
-
-Parâmetros:
-- Servidores = 1
-- Capacidade = 5
-- Tempo mínimo de chegada = 2
-- Tempo máximo de chegada = 4
-- Tempo mínimo de saída = 3
-- Tempo máximo de saída = 5
-- Tempo do primeiro evento  = 3
-- Randoms = 0.2176f, 0.0103f, 0.1109f, 0.3456f, 0.9910f, 0.2323f, 0.9211f, 0.0322f, 0.1211f, 0.5131f, 0.7208f, 0.9172f, 0.9922f, 0.8324f, 0.5011f, 0.2931f
+- Versão Final
+Esta é a implementação final do simulador, capaz de realizar simulações com filas infinitas
+e redes de filas com probabilidades de roteamento.
 
 É possível obter os arquivos de configuração desta simulação na pasta /data.
-
-Os resultados obtidos podem ser encontrados na pasta /reports, e foram obtidos na execução dos seguintes cenários de testes:
-- Fila G/G/1/5 com chegadas entre 2 e 4 e saídas entre 3 e 5.
-- Fila G/G/2/5 com chegadas entre 2 e 4 e saídas entre 3 e 5.
+O cenário para a homologação está descrito no arquivo teste_final.yml
 
 
 Conteúdo:
-- /sim-queues-1.0.jar:
+- /sim-queues-3.0.jar:
     Executável desta implementação.
     para usar: java -jar sim-queues-1.0.jar
 
@@ -42,12 +28,10 @@ Conteúdo:
     para usar: java -jar simulador.jar
 
 - data/:
+    Estacionariedade.yml: Testa o comportamento de filas infinitas com lambda > mu.
     FilaSimples1.yml: Arquivo de configuração da simulação.
-    random_list.dat: Lista de randoms para comparação
-
-
-- reports/:
-    test1.txt: Saída da simulação da fila G/G/1/5 para 5 execuções com sementes arbitrárias
-    test2.txt: Saída da simulação da fila G/G/2/5 para 5 execuções com sementes arbitrárias
-    Plotagem dos gráficos de dispersão para cada uma das execuções (gnuplot);
+    FilasProbRotacao.yml: Cenário básico de uma fila com roteamento aleatório
+    ParDeFilas.yml: Cenário para duas filas em tandem.
+    Splitter.yml: Testa o comportamento de uma rede de filas em árvore
+    SplitterRandom.yml: Mesmo cenário acima com configuração de aleatórios diferentes.
 
