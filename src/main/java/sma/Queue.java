@@ -1,7 +1,10 @@
 package sma;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Queue {
 
@@ -14,7 +17,7 @@ public class Queue {
     private float maxDeparture;
 
     private int size;
-    private float[] states;
+    private HashMap<Integer, Float> states;
     private int loss = 0;
 
 
@@ -28,7 +31,8 @@ public class Queue {
         this.maxDeparture = maxDeparture;
 
         this.size = 0;
-        this.states = new float[capacity + 1];
+        this.states = new HashMap<>();
+        this.states.put(0, 0f);
     }
 
     public String getName() {
@@ -87,13 +91,13 @@ public class Queue {
         this.maxDeparture = maxDeparture;
     }
 
-    public float[] getStates() {
-        return states;
-    }
-
-    public void setStates(float[] states) {
-        this.states = states;
-    }
+//    public float[] getStates() {
+//        return states;
+//    }
+//
+//    public void setStates(float[] states) {
+//        this.states = states;
+//    }
 
     public int getSize() {
         return size;
@@ -104,7 +108,8 @@ public class Queue {
     }
 
     public void addLoss() {
-        this.loss++;
+        if (capacity > 0)
+            this.loss++;
     }
 
     public int getLoss() {
@@ -115,49 +120,37 @@ public class Queue {
     public String toString() {
         return "Queue{" +
                 "name=" + name +
+                ", size=" + size +
                 ", servers=" + servers +
-                ", size=" + capacity +
+                ", capacity=" + capacity +
                 ", minArrival=" + minArrival +
                 ", maxArrival=" + maxArrival +
                 ", minExit=" + minDeparture +
                 ", maxExit=" + maxDeparture +
-                ", states=" + Arrays.toString(states) +
+                ", states=" + this.states.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList()) +
                 '}';
     }
 
     public void updateTimes(float delta) {
-        int i = size;
-        states[i] = states[i] + delta;
+        Float val = this.states.getOrDefault(size, 0f);
+        this.states.put(size, val + delta);
     }
 
     public String printStateTimes(float time) {
         StringBuilder sb = new StringBuilder();
-
-//        sb.append(" Size=").append(size);
-//        sb.append("\n").append(" Loss=").append(loss);
-//        sb.append('\n').append(' ').append("States\t");
-//        for (int i = 0; i <= capacity; i++) {
-//            sb.append(String.format("%10s", i)).append('\t');
-//        }
-//        sb.append('\n').append(' ').append("Times\t");
-//        for (int i = 0; i <= capacity; i++) {
-//            sb.append(String.format("%10s", states[i])).append('\t');
-//        }
-//        sb.append('\n').append(' ').append("Prob.\t");
-//        for (int i = 0; i <= capacity; i++) {
-//            sb.append(String.format("%10s%%", String.format(Locale.ROOT, "%.2f", 100 * states[i]/time))).append('\t');
-//        }
-
         sb.append("Queue: ").append(name).append("\n")
                 .append("Size: ").append(size).append("\n")
                 .append("Loss: ").append(loss).append("\n\n")
-                .append("State     ").append("\t").append("Time      ").append("\t").append("Prob.     ").append("\n");
+                .append("State     ").append("\t")
+                .append("Time      ").append("\t")
+                .append("Prob.     ").append("\n");
 
-        for (int i = 0; i <= capacity; i++) {
+
+        this.states.forEach((i, v) -> {
             sb.append(String.format("%-10s", i)).append('\t')
-                    .append(String.format("%10s", states[i])).append('\t')
-                    .append(String.format("%10s%%", String.format(Locale.ROOT, "%.2f", 100 * states[i] / time))).append('\n');
-        }
+                    .append(String.format("%10s", String.format(Locale.ROOT, "%.4f", v))).append('\t')
+                    .append(String.format("%10s%%", String.format(Locale.ROOT, "%.2f", 100 * v / time))).append('\n');
+        });
 
         return sb.toString();
     }

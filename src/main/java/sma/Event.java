@@ -59,8 +59,12 @@ public class Event {
     @Override
     public String toString() {
         String t = type == 0 ? "ARRIVAL" : type == 1 ? "DEPARTURE" : "TRANSITION";
-        return type == 2
-                ? String.format(Locale.ROOT, "Event: %s from %s to %s at %f ", t, queue, destination, time)
-                : String.format(Locale.ROOT, "Event: %s at %f", t, time);
+        if (type == 0) {
+            return String.format(Locale.ROOT, "Event: %s in %s at %f",t, queue, time);
+        } else if (type == 1) {
+            return String.format(Locale.ROOT, "Event: %s from %s at %f", t, queue, time);
+        } else {
+            return String.format(Locale.ROOT, "Event: %s from %s to %s at %f ", t, queue, destination, time);
+        }
     }
 }

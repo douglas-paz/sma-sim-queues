@@ -25,7 +25,7 @@ public class SmaSimulator {
             if (input.seeds != null) {
                 seed = input.seeds.get(0);
                 iterations = Math.toIntExact(input.rndnumbersPerSeed);
-                random = new LinearCongruentRandom(seed);
+                random = new BigDecimalRandom(seed);
             } else if (input.rndnumbers != null) {
                 random = new MockedRandom(convertRandoms(input.rndnumbers));
                 iterations = input.rndnumbers.size();
@@ -93,7 +93,7 @@ public class SmaSimulator {
     }
 
     public static Queue convertQueue(String name, Input.InputQueue in) {
-        return new Queue(name, in.servers, in.capacity == 0 ? 100 : in.capacity, in.minArrival, in.maxArrival, in.minService, in.maxService);
+        return new Queue(name, in.servers, in.capacity, in.minArrival, in.maxArrival, in.minService, in.maxService);
     }
 
     public static Route convertRoute(String name, Input.Network in) {

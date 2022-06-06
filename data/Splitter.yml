@@ -1,0 +1,104 @@
+!PARAMETERS
+rndnumbers:
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+
+arrivals:
+  F1: 1.0
+
+queues:
+  F1:
+    servers: 1
+    minArrival: 1.0
+    maxArrival: 1.0
+    minService: 1.0
+    maxService: 1.0
+  F2:
+    servers: 1
+    minService: 1.0
+    maxService: 1.0
+  F3:
+    servers: 1
+    minService: 1.0
+    maxService: 1.0
+  F4:
+    servers: 1
+    minService: 1.0
+    maxService: 1.0
+  F5:
+    servers: 1
+    minService: 1.0
+    maxService: 1.0
+  F6:
+    servers: 1
+    minService: 1.0
+    maxService: 1.0
+  F7:
+    servers: 1
+    minService: 1.0
+    maxService: 1.0
+  F8:
+    servers: 1
+    minService: 1.0
+    maxService: 1.0
+
+network:
+  -  source: F1
+     target: F2
+     probability: 0.5
+  -  source: F1
+     target: F3
+     probability: 0.5
+  -  source: F2
+     target: F4
+     probability: 0.5
+  -  source: F2
+     target: F6
+     probability: 0.5
+  -  source: F3
+     target: F5
+     probability: 0.5
+  -  source: F3
+     target: F7
+     probability: 0.5
+  -  source: F4
+     target: F8
+     probability: 0.25
+  -  source: F5
+     target: F8
+     probability: 0.25
+  -  source: F6
+     target: F8
+     probability: 0.25
+  -  source: F7
+     target: F8
+     probability: 0.25
+
