@@ -1,12 +1,15 @@
 package sma;
 
+import sma.io.InputData;
+import sma.io.Loader;
+
 public class YamlSimulationTestBase {
 
     protected String file = "teste_final.yml";
 
-    protected Input input;
+    protected InputData inputData;
 
     protected void load() throws Exception {
-        Input input = new Loader().inputLoader(file);
+        InputData inputData = new Loader().inputLoader(file);
     }
 }

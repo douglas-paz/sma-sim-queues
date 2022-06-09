@@ -1,4 +1,6 @@
-package sma;
+package sma.random;
+
+import sma.random.IRandom;
 
 public class MockedRandom implements IRandom {
 

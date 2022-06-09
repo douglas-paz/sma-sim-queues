@@ -1,6 +1,7 @@
 package sma;
 
 import org.junit.jupiter.api.Test;
+import sma.random.LinearCongruentRandom;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;

@@ -2,14 +2,16 @@ package sma;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
+import sma.io.Logger;
+import sma.random.IRandom;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class SmaSimulation {
 
+    private Logger logger;
     private SmaScheduler scheduler;
 
     private IRandom random;
@@ -19,7 +21,8 @@ public class SmaSimulation {
     private MultiValuedMap<String, Route> network = new ArrayListValuedHashMap<>();
 
 
-    public SmaSimulation(Queue q, IRandom r, int i, float t1) {
+    public SmaSimulation(Logger logger, Queue q, IRandom r, int i, float t1) {
+        this.logger = logger;
         this.queues.put(q.getName(), q);
         this.iterations = i;
         this.time = 0;
@@ -28,7 +31,8 @@ public class SmaSimulation {
         this.scheduler.init(new Event(Event.ARRIVAL, t1, q.getName()));
     }
 
-    public SmaSimulation(Map<String, Queue> q, MultiValuedMap<String, Route> n, IRandom r, int i, List<Event> e1) {
+    public SmaSimulation(Logger logger, Map<String, Queue> q, MultiValuedMap<String, Route> n, IRandom r, int i, List<Event> e1) {
+        this.logger = logger;
         this.queues = q;
         this.network = n;
         this.iterations = i;
@@ -38,7 +42,7 @@ public class SmaSimulation {
     }
 
     public void run() {
-        System.out.println(String.format("Starting simulation: %n Queues=%s %n Iterations=%d %n", queues, iterations));
+        logger.log(String.format("Starting simulation: %n Queues: %n%s %n Iterations: %d %n%n", queues, iterations));
         try {
             while (iterations > 0) {
                 Event e = scheduler.removeFirst();
@@ -52,11 +56,11 @@ public class SmaSimulation {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            logger.error(e);
         }
-        System.out.println(String.format(Locale.ROOT, " End of Simulation: %n Scheduler=%s %n Time=%f", scheduler, time));
-        queues.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(e -> System.out.println(e.getValue().printStateTimes(time)));
+        logger.log(String.format("End of Simulation: %n  Scheduler:%n%s  Time: %f%n", scheduler, time));
+        queues.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(e -> logger.log(e.getValue().printStateTimes(time)));
+        logger.persist();
     }
 
 
@@ -144,7 +148,6 @@ public class SmaSimulation {
 
     private float randomBetween(float a, float b) {
         iterations = iterations - 1;
-        float rnd = (float) ((b - a) * random.nextDouble() + a);
-        return rnd;
+        return (float) ((b - a) * random.nextDouble() + a);
     }
 }

@@ -1,4 +1,4 @@
-package sma;
+package sma.random;
 
 public class LinearCongruentRandom implements IRandom {
 

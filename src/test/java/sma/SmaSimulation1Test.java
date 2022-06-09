@@ -1,9 +1,13 @@
 package sma;
 
 import org.junit.jupiter.api.Test;
+import sma.io.Logger;
+import sma.random.IRandom;
+import sma.random.LinearCongruentRandom;
 
 class SmaSimulation1Test {
 
+    public static final Logger log = Logger.init(Logger.LOG_MODE.CONSOLE);
 
     @Test
     public void test1Server() {
@@ -18,7 +22,7 @@ class SmaSimulation1Test {
         q1 = new Queue("Q1", 1, 5, 2f, 4f, 3f, 5f);
         random = new LinearCongruentRandom(1640995200000L);
         LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
-        sim = new SmaSimulation(q1, random, randoms, first);
+        sim = new SmaSimulation(log, q1, random, randoms, first);
         sim.run();
 
 
@@ -26,28 +30,28 @@ class SmaSimulation1Test {
         q1 = new Queue("Q1",1, 5, 2f, 4f, 3f, 5f);
         random = new LinearCongruentRandom(1577836800000L);
         LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
-        sim = new SmaSimulation(q1, random, randoms, first);
+        sim = new SmaSimulation(log, q1, random, randoms, first);
         sim.run();
 
         System.out.println("\nRun 3: \n Randoms=100_000 \n Seed=1546300800000");
         q1 = new Queue("Q1",1, 5, 2f, 4f, 3f, 5f);
         random = new LinearCongruentRandom(1546300800000L);
         LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
-        sim = new SmaSimulation(q1, random, randoms, first);
+        sim = new SmaSimulation(log, q1, random, randoms, first);
         sim.run();
 
         System.out.println("\nRun 4: \n Randoms=100_000 \n Seed=1514764800000");
         q1 = new Queue("Q1",1, 5, 2f, 4f, 3f, 5f);
         random = new LinearCongruentRandom(1514764800000L);
         LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
-        sim = new SmaSimulation(q1, random, randoms, first);
+        sim = new SmaSimulation(log, q1, random, randoms, first);
         sim.run();
 
         System.out.println("\nnRun 5: \n Randoms=100_000 \n Seed=1483228800000");
         q1 = new Queue("Q1",1, 5, 2f, 4f, 3f, 5f);
         random = new LinearCongruentRandom(1483228800000L);
         LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
-        sim = new SmaSimulation(q1, random, randoms, first);
+        sim = new SmaSimulation(log, q1, random, randoms, first);
         sim.run();
     }
 
@@ -65,7 +69,7 @@ class SmaSimulation1Test {
         q1 = new Queue("Q1",2, 5, 2f, 4f, 3f, 5f);
         random = new LinearCongruentRandom(1640995200000L);
         LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
-        sim = new SmaSimulation(q1, random, randoms, first);
+        sim = new SmaSimulation(log, q1, random, randoms, first);
         sim.run();
 
 
@@ -73,28 +77,28 @@ class SmaSimulation1Test {
         q1 = new Queue("Q1",2, 5, 2f, 4f, 3f, 5f);
         random = new LinearCongruentRandom(1577836800000L);
         LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
-        sim = new SmaSimulation(q1, random, randoms, first);
+        sim = new SmaSimulation(log, q1, random, randoms, first);
         sim.run();
 
         System.out.println("\nRun 3: \n Randoms=100_000 \n Seed=1546300800000");
         q1 = new Queue("Q1",2, 5, 2f, 4f, 3f, 5f);
         random = new LinearCongruentRandom(1546300800000L);
         LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
-        sim = new SmaSimulation(q1, random, randoms, first);
+        sim = new SmaSimulation(log, q1, random, randoms, first);
         sim.run();
 
         System.out.println("\nRun 4: \n Randoms=100_000 \n Seed=1514764800000");
         q1 = new Queue("Q1",2, 5, 2f, 4f, 3f, 5f);
         random = new LinearCongruentRandom(1514764800000L);
         LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
-        sim = new SmaSimulation(q1, random, randoms, first);
+        sim = new SmaSimulation(log, q1, random, randoms, first);
         sim.run();
 
         System.out.println("\nRun 5: \n Randoms=100_000 \n Seed=1483228800000");
         q1 = new Queue("Q1",2, 5, 2f, 4f, 3f, 5f);
         random = new LinearCongruentRandom(1483228800000L);
         LinearCongruentRandom.warmupRandom((LinearCongruentRandom) random);
-        sim = new SmaSimulation(q1, random, randoms, first);
+        sim = new SmaSimulation(log, q1, random, randoms, first);
         sim.run();
     }
 }
