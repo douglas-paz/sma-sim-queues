@@ -23,12 +23,14 @@ public class Loader {
     public InputData loadFromFile(String file) throws FileNotFoundException {
         Yaml yaml = new Yaml(new Constructor(InputData.class));
         InputStream inputStream = new FileInputStream(file);
-        return yaml.load(inputStream);
+        InputData data = yaml.load(inputStream);
+        data.originalPath = file;
+        return data;
     }
 
     public static void writeOnPath(String path, String content) {
         try {
-            FileOutputStream outputStream = new FileOutputStream(path);
+            FileOutputStream outputStream = new FileOutputStream(path + "_" + System.currentTimeMillis() + ".out");
             outputStream.write(content.getBytes(StandardCharsets.UTF_8));
             outputStream.close();
         } catch (IOException e) {

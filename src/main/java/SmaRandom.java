@@ -4,7 +4,6 @@ import java.util.Locale;
 
 public class SmaRandom {
 
-
     public static void main(String[] args) {
         long seed = 0;
         long iterations = 1;

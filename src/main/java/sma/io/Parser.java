@@ -29,6 +29,7 @@ public class Parser {
             System.out.println("-f, --files <file1.yml, file2.yml...> | path for files to be executed                            ");
             System.out.println("-b, --big                             | uses a big decimal random instead of a linear congruent  ");
             System.out.println("-w, --write                           | write mode, write the output to a file                   ");
+            System.out.println("-d, --debug                           | log extra debug information                              ");
             System.out.println("=================================================================================================");
             System.exit(0);
             return null;
@@ -36,6 +37,7 @@ public class Parser {
 
         boolean isWriteActive = false;
         boolean isBigActive = false;
+        boolean isDebugEnabled = false;
         List<String> files = new ArrayList<>();
         for (String arg : args) {
             switch (arg) {
@@ -50,23 +52,28 @@ public class Parser {
                 case "--write":
                     isWriteActive = true;
                     break;
+                case "-d":
+                case "--debug":
+                    isDebugEnabled = true;
+                    break;
                 default:
                     files.add(arg);
             }
         }
         List<SmaSimulation> list = new ArrayList<>();
         for (String file : files) {
-            SmaSimulation parse = parse(file, isWriteActive, isBigActive);
+            Logger logger = Logger.init(file, isWriteActive ? Logger.LOG_MODE.FILE : Logger.LOG_MODE.CONSOLE, isDebugEnabled);
+            SmaSimulation parse = parse(file, logger, isBigActive);
             list.add(parse);
         }
         return list;
     }
 
-    public SmaSimulation parse(String filename, boolean isWriteActive, boolean isBigActive) throws Exception {
+    public SmaSimulation parse(String filename, Logger logger, boolean isBigActive) throws Exception {
         InputData input = new Loader().loadFromFile(filename);
 
-        long seed = 0;
-        int iterations = 0;
+        long seed;
+        int iterations;
         IRandom random;
 
         if (input.seeds != null) {
@@ -74,7 +81,7 @@ public class Parser {
             iterations = Math.toIntExact(input.rndnumbersPerSeed);
             random = isBigActive ? new BigDecimalRandom(seed) : new LinearCongruentRandom(seed);
         } else if (input.rndnumbers != null) {
-            random = new MockedRandom(convertRandoms(input.rndnumbers));
+            random = new MockedRandom(input.rndnumbers);
             iterations = input.rndnumbers.size();
         } else {
             throw new Exception("Randoms unespecified");
@@ -87,25 +94,13 @@ public class Parser {
         if (input.network != null) {
             network = new ArrayListValuedHashMap<>();
             MultiValuedMap<String, Route> finalNetwork = network;
-            input.network.forEach((n) -> {
-                finalNetwork.put(n.source, convertRoute(n.source, n));
-            });
+            input.network.forEach((n) -> finalNetwork.put(n.source, convertRoute(n.source, n)));
             queueMap.forEach((s, q) -> addMissingRoutes(q, (List<Route>) finalNetwork.get(s)));
         }
         List<Event> arrivals = new ArrayList<>();
         input.arrivals.forEach((s, t) -> arrivals.add(new Event(Event.ARRIVAL, t, s)));
 
-        Logger logger = Logger.init(isWriteActive ? Logger.LOG_MODE.FILE : Logger.LOG_MODE.CONSOLE);
-
         return new SmaSimulation(logger, queueMap, network, random, iterations, arrivals);
-    }
-
-    private static float[] convertRandoms(List<Float> rndnumbers) {
-        float[] floats = new float[rndnumbers.size()];
-        for (int i = 0; i < rndnumbers.size(); i++) {
-            floats[i] = rndnumbers.get(i);
-        }
-        return floats;
     }
 
     public static Queue convertQueue(String name, InputData.InputQueue in) {

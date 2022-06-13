@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class InputData {
+    public String originalPath;
     public List<Float> rndnumbers;
     public List<Long> seeds;
     public Long rndnumbersPerSeed;
@@ -25,6 +26,5 @@ public class InputData {
         public String source;
         public String target;
         public float probability;
-        public Network() {}
     }
 }

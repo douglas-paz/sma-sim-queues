@@ -13,7 +13,6 @@ public class SmaSimulation {
 
     private Logger logger;
     private SmaScheduler scheduler;
-
     private IRandom random;
     private int iterations;
     private float time;
@@ -42,7 +41,7 @@ public class SmaSimulation {
     }
 
     public void run() {
-        logger.log(String.format("Starting simulation: %n Queues: %n%s %n Iterations: %d %n%n", queues, iterations));
+        logger.debug(String.format("Starting simulation:%n  Queues:%n%s %n Iterations: %d %n%n", Logger.formatMapLog(queues), iterations));
         try {
             while (iterations > 0) {
                 Event e = scheduler.removeFirst();
@@ -58,7 +57,7 @@ public class SmaSimulation {
         } catch (Exception e) {
             logger.error(e);
         }
-        logger.log(String.format("End of Simulation: %n  Scheduler:%n%s  Time: %f%n", scheduler, time));
+        logger.debug(String.format("End of Simulation: %n  Scheduler:%n%s  Time: %f%n", scheduler, time));
         queues.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(e -> logger.log(e.getValue().printStateTimes(time)));
         logger.persist();
     }
@@ -114,7 +113,6 @@ public class SmaSimulation {
         }
         return null;
     }
-
 
     public void departure(Event e, Queue q) throws Exception {
         if (q.getSize() == 0)
