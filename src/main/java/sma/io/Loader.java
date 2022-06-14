@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 
 public class Loader {
 
@@ -30,7 +31,7 @@ public class Loader {
 
     public static void writeOnPath(String path, String content) {
         try {
-            FileOutputStream outputStream = new FileOutputStream(path + "_" + System.currentTimeMillis() + ".out");
+            FileOutputStream outputStream = new FileOutputStream(Paths.get(path).getFileName().toString() + "_" + System.currentTimeMillis());
             outputStream.write(content.getBytes(StandardCharsets.UTF_8));
             outputStream.close();
         } catch (IOException e) {

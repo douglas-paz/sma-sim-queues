@@ -41,7 +41,8 @@ public class SmaSimulation {
     }
 
     public void run() {
-        logger.debug(String.format("Starting simulation:%n  Queues:%n%s %n Iterations: %d %n%n", Logger.formatMapLog(queues), iterations));
+        logger.debug(String.format("Starting simulation:%n  Queues:%n%s %n", Logger.formatMapLog(queues)));
+        logger.debug(String.format("Simulation total Iterations: %d %n%n", iterations));
         try {
             while (iterations > 0) {
                 Event e = scheduler.removeFirst();
@@ -57,8 +58,9 @@ public class SmaSimulation {
         } catch (Exception e) {
             logger.error(e);
         }
-        logger.debug(String.format("End of Simulation: %n  Scheduler:%n%s  Time: %f%n", scheduler, time));
+        logger.debug(String.format("End of Simulation: %n  Scheduler:%n%s", scheduler));
         queues.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(e -> logger.log(e.getValue().printStateTimes(time)));
+        logger.log(String.format("Simulation average Time: %f%n", time));
         logger.persist();
     }
 
