@@ -1,9 +1,8 @@
-import sma.LinearCongruentRandom;
+import sma.random.LinearCongruentRandom;
 
 import java.util.Locale;
 
 public class SmaRandom {
-
 
     public static void main(String[] args) {
         long seed = 0;
@@ -24,7 +23,7 @@ public class SmaRandom {
         }
 
         for (int i = 0; i < iterations; i++) {
-            System.out.println(String.format(Locale.ROOT, "%20.20f", random.nextDouble()));
+            System.out.printf(Locale.ROOT, "%20.20f%n", random.nextDouble());
         }
     }
 }

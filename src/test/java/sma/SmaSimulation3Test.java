@@ -3,6 +3,9 @@ package sma;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.Test;
+import sma.io.Logger;
+import sma.random.IRandom;
+import sma.random.MockedRandom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class SmaSimulation3Test extends YamlSimulationTestBase {
+
+    public static final Logger log = Logger.init(Logger.LOG_MODE.CONSOLE);
 
     @Test
     public void testTandem_RandomList() {
@@ -36,7 +41,7 @@ public class SmaSimulation3Test extends YamlSimulationTestBase {
         IRandom random = new MockedRandom(getRandoms());
         List<Event> arrivals = new ArrayList<>();
         arrivals.add(new Event(Event.ARRIVAL, 1.0f, "Q1"));
-        SmaSimulation sim = new SmaSimulation(queues, network, random, 100, arrivals);
+        SmaSimulation sim = new SmaSimulation(log, queues, network, random, 100, arrivals);
         sim.run();
     }
 

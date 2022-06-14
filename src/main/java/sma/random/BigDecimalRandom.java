@@ -1,4 +1,4 @@
-package sma;
+package sma.random;
 
 import java.math.BigInteger;
 

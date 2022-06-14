@@ -30,8 +30,10 @@ public class SmaScheduler {
 
     @Override
     public String toString() {
-        return "SmaScheduler{" +
-                "queue=" + queue +
-                '}';
+        StringBuilder builder = new StringBuilder();
+        for (Event event : queue) {
+            builder.append(event);
+        }
+        return builder.toString();
     }
 }

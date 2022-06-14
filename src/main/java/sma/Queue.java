@@ -2,8 +2,6 @@ package sma;
 
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Queue {
 
@@ -109,7 +107,7 @@ public class Queue {
 
     @Override
     public String toString() {
-        return "Queue{" +
+        return "Queue: " +
                 "name=" + name +
                 ", size=" + size +
                 ", servers=" + servers +
@@ -118,8 +116,7 @@ public class Queue {
                 ", maxArrival=" + maxArrival +
                 ", minExit=" + minDeparture +
                 ", maxExit=" + maxDeparture +
-                ", states=" + this.states.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList()) +
-                '}';
+                ", states=" + this.states.values().stream().toList();
     }
 
     public void updateTimes(float delta) {
@@ -137,11 +134,9 @@ public class Queue {
                 .append("Prob.     ").append("\n");
 
 
-        this.states.forEach((i, v) -> {
-            sb.append(String.format("%-10s", i)).append('\t')
-                    .append(String.format("%10s", String.format(Locale.ROOT, "%.4f", v))).append('\t')
-                    .append(String.format("%10s%%", String.format(Locale.ROOT, "%.2f", 100 * v / time))).append('\n');
-        });
+        this.states.forEach((i, v) -> sb.append(String.format("%-10s", i)).append('\t')
+                .append(String.format("%10s", String.format(Locale.ROOT, "%.4f", v))).append('\t')
+                .append(String.format("%10s%%", String.format(Locale.ROOT, "%.2f", 100 * v / time))).append('\n'));
 
         return sb.toString();
     }

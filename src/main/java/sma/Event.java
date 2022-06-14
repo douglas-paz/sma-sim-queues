@@ -60,11 +60,11 @@ public class Event {
     public String toString() {
         String t = type == 0 ? "ARRIVAL" : type == 1 ? "DEPARTURE" : "TRANSITION";
         if (type == 0) {
-            return String.format(Locale.ROOT, "Event: %s in %s at %f",t, queue, time);
+            return String.format(Locale.ROOT, "\tEvent: %s in %s at %f %n",t, queue, time);
         } else if (type == 1) {
-            return String.format(Locale.ROOT, "Event: %s from %s at %f", t, queue, time);
+            return String.format(Locale.ROOT, "\tEvent: %s from %s at %f %n", t, queue, time);
         } else {
-            return String.format(Locale.ROOT, "Event: %s from %s to %s at %f ", t, queue, destination, time);
+            return String.format(Locale.ROOT, "\tEvent: %s from %s to %s at %f %n", t, queue, destination, time);
         }
     }
 }
