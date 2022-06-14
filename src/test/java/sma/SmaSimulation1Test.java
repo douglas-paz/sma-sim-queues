@@ -7,7 +7,7 @@ import sma.random.LinearCongruentRandom;
 
 class SmaSimulation1Test {
 
-    public static final Logger log = Logger.init(Logger.LOG_MODE.CONSOLE);
+    public static final Logger log = Logger.init(null, Logger.LOG_MODE.CONSOLE, true);
 
     @Test
     public void test1Server() {
