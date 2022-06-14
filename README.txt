@@ -7,11 +7,14 @@ e redes de filas com probabilidades de roteamento.
 É possível obter os arquivos de configuração desta simulação na pasta /data.
 O cenário para a homologação está descrito no arquivo teste_final.yml
 
+O link para o vídeo da apresentação é o seguinte.
+https://www.youtube.com/watch?v=yBN1otNpyXc
+
 
 Conteúdo:
-- /sim-queues-3.0.jar:
+- /sim-final.jar:
     Executável desta implementação.
-    para usar: java -jar sim-queues-1.0.jar
+    para usar: java -jar sim-final.jar <spec_yml>
 
 - tools/sma-random-1.0.jar:
     Gerador de números aleatórios.
@@ -34,4 +37,5 @@ Conteúdo:
     ParDeFilas.yml: Cenário para duas filas em tandem.
     Splitter.yml: Testa o comportamento de uma rede de filas em árvore
     SplitterRandom.yml: Mesmo cenário acima com configuração de aleatórios diferentes.
+
 
