@@ -12,7 +12,7 @@ queues:
   F1: # SENHAS
     servers: 1
     minArrival: 1.0
-    maxArrival: 5.0
+    maxArrival: 6.0
     minService: 0.5
     maxService: 1.5
   F2: # DOCUMENTOS
