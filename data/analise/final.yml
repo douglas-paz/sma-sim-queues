@@ -1,0 +1,57 @@
+!PARAMETERS
+
+seeds:
+  - 1640995200000
+
+rndnumbersPerSeed: 100000
+
+arrivals:
+  F1: 1.0
+
+queues:
+  F1: # SENHAS
+    servers: 1
+    minArrival: 1.0
+    maxArrival: 6.0
+    minService: 0.5
+    maxService: 1.5
+  F2: # DOCUMENTOS
+    servers: 3
+    capacity: 9
+    minService: 8.0
+    maxService: 15.0
+  F3: # FINANCEIRO
+    servers: 1 # MOD : Reescalar funcionario para a funcao de ASSINATURA de contrato
+    capacity: 4
+    minService: 6.0
+    maxService: 12.0
+  F4: # ASSINATURA
+    servers: 2 # MOD : Receber o funcionario vindo da funcao de FINANCEIRO
+    capacity: 6
+    minService: 5.0
+    maxService: 8.0 # MOD : Treinamento para reduzir o tempo de atendimento
+
+network:
+  - source: F1
+    target: F2
+    probability: 0.7
+
+  - source: F1
+    target: F3
+    probability: 0.3
+
+  - source: F2
+    target: F3
+    probability: 0.1
+
+  - source: F2
+    target: F4
+    probability: 0.7
+
+  - source: F3
+    target: F4
+    probability: 0.8
+
+  - source: F4
+    target: F2
+    probability: 0.15 # MOD : Treinamento para reduzir 25% na taxa de retorno a F2 (Documentos)
