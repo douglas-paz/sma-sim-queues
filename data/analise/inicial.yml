@@ -41,7 +41,7 @@ network:
     probability: 0.3
 
   - source: F2
-    target: F3
+    target: F1
     probability: 0.1
 
   - source: F2
@@ -50,7 +50,11 @@ network:
 
   - source: F3
     target: F4
-    probability: 0.8
+    probability: 0.7
+  
+  - source: F3
+    target: F1
+    probability: 0.2
 
   - source: F4
     target: F2
